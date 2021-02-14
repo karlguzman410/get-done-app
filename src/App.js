@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { Toolbar } from '@material-ui/core'
+import React, { useState } from 'react'
+import { Form, Navbar, Todolist } from './components'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+    const [todolist, setTodolist] = useState([])
+
+    const handleAddTodo = ((todo) => {
+        console.log('handleAddTodo in App.js')
+        console.log(`${todo} received from Form.js`)
+
+        setTodolist([...todolist, todo])
+    })
+
+    const removeTodo = ((itemToRemove) => {
+        console.log('removeTodo in App.js')
+        console.log(`${itemToRemove} received from Todolist.js`)
+        setTodolist(todolist.filter((todo) => todo !== itemToRemove))
+    })
+
+
+    console.log(todolist)
+
+    return (
+        <div>
+            <Navbar />
+            <Toolbar />
+            <Form handleAddTodo={handleAddTodo} />
+            <br />
+            <Todolist todolist={todolist} removeTodo={removeTodo} />
+        </div>
+    )
 }
 
-export default App;
+export default App
