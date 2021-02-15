@@ -26,8 +26,6 @@ const App = () => {
         })
     }, [])
 
-    console.log(`todo list: ${todolist}`)
-
 
     const handleAddTodo = ((todo) => {
         console.log('handleAddTodo in App.js')
@@ -41,10 +39,12 @@ const App = () => {
         })
     })
 
-    const removeTodo = ((itemToRemove) => {
+    //we are receiving the todo.id from Todolist.js
+    const removeTodo = ((todo) => {
         console.log('removeTodo in App.js')
-        console.log(`${itemToRemove} received from Todolist.js`)
-        setTodolist(todolist.filter((todo) => todo !== itemToRemove))
+        console.log(`${todo} received from Todolist.js`)
+        //deleting from firebase db
+        database.collection('todos').doc(todo).delete()
     })
 
     return (
