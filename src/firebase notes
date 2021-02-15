@@ -1,0 +1,35 @@
+1. Set up Firebase project
+2. Retrieve firebase config key
+3. Create firebase.js file in 'src'
+4. Make sure firebase dependencies are installed in the project-- npm i firebase
+5. Paste the code below
+
+import firebase from 'firebase';
+
+const firebaseApp = firebase.initializeApp({
+    apiKey: "AIzaSyAvJ70IvVP1SnLHTztNKsrCgFg2izw52ew",
+    authDomain: "get-done-fb9be.firebaseapp.com",
+    projectId: "get-done-fb9be",
+    storageBucket: "get-done-fb9be.appspot.com",
+    messagingSenderId: "357073054384",
+    appId: "1:357073054384:web:651929f5c7762184396975",
+    measurementId: "G-DTPTY4HRET"
+})
+
+const database = firebaseApp.firestore();
+
+export default database;
+
+6. Import 'database' to the Component(App.js) that needs access to the firebase database
+
+
+Deployment:
+Terminal - firebase init
+
+Select a Firebase CLI feature - Hosting
+
+Follow the CLI prompt - single page app, etc,
+
+Run - npm run build
+
+run - firebase deploy
