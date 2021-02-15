@@ -13,10 +13,20 @@ const App = () => {
         database.collection('todos').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
             // console.log(snapshot.docs.map(doc => doc.data()))
             // on database snapshot, map throught the 'docs'. For each 'doc', return the 'todo'
-            //              <--this will return an array of todos(string) we can setTodolist-->
-            setTodolist(snapshot.docs.map(doc => doc.data().todo))
+            //              <--this will return an array of object we can use to setTodolist-->
+
+            // console.log(snapshot.docs.map(doc => ({
+            //     id: doc.id,
+            //     todo: doc.data().todo
+            // })))
+            setTodolist(snapshot.docs.map(doc => ({
+                id: doc.id,
+                todo: doc.data().todo
+            })))
         })
     }, [])
+
+    console.log(`todo list: ${todolist}`)
 
 
     const handleAddTodo = ((todo) => {
@@ -43,6 +53,9 @@ const App = () => {
             <Toolbar />
             <Form handleAddTodo={handleAddTodo} />
             <br />
+            {/* {Object.keys(todolist).map(todo => (
+                <p key={todolist[todo].id}>{todolist[todo].todo}</p>
+            ))} */}
             <Todolist todolist={todolist} removeTodo={removeTodo} />
         </div>
     )

@@ -10,24 +10,21 @@ const Todolist = ({ todolist, removeTodo }) => {
   return (
     <>
       <Box width="50%" boxShadow={3} margin="auto" p={3}>
-        <Grid container spacing={3}>
-          {todolist.length > 0 ? (
-            todolist.map((todo) => (
-              <Grid container item xs={12} spacing={3} key={todo}>
+        {!todolist.length ? (
+          <Typography>No more tasks for the day</Typography>
+        ) : (
+          <Grid container spacing={3}>
+            {todolist.map((todo) => (
+              <Grid container item xs={12} spacing={3} key={todo.id}>
                 <Checkbox
                   color="primary"
-                  onChange={(event) => handleChange(event, todo)}
+                  onChange={(event) => handleChange(event, todo.id)}
                 />
-                <Typography variant="h6">{todo}</Typography>
+                <Typography variant="h6">{todo.todo}</Typography>
               </Grid>
-            ))
-          ) : (
-            <Typography variant="subtitle1" color="textSecondary" align="left">
-              Seems like a pretty chill day today.. Let's get productive. Add an
-              item.
-            </Typography>
-          )}
-        </Grid>
+            ))}
+          </Grid>
+        )}
       </Box>
     </>
   );

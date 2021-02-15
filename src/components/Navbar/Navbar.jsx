@@ -16,7 +16,7 @@ const Navbar = () => {
               height="50px"
               className={classes.image}
             />
-            Get done ✅
+            ✅ Get done ✅
           </Typography>
         </Toolbar>
       </AppBar>
