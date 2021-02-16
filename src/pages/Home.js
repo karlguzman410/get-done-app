@@ -1,19 +1,17 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Toolbar } from '@material-ui/core'
-// import { Form, Navbar, Todolist } from './components'
-import { AppContext } from '../AppContext'
+import { Form, Navbar, Todolist } from '../components'
 
 
 
 const Home = () => {
-    const { todolist } = useContext(AppContext)
     return (
         <div>
-            {/* <Navbar />
-            <Toolbar /> */}
-            {/* <Form handleAddTodo={handleAddTodo} />
+            <Navbar />
+            <Toolbar />
+            <Form />
             <br />
-            <Todolist todolist={todolist} removeTodo={removeTodo} updateTodo={updateTodo} /> */}
+            <Todolist />
         </div>
     )
 }

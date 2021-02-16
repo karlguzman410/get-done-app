@@ -6,6 +6,7 @@ const AppContext = React.createContext()
 
 function ContextProvider({ children }) {
     const [todolist, setTodolist] = useState([])
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     //fetch todos from firebase upon mounting
     useEffect(() => {
@@ -25,6 +26,8 @@ function ContextProvider({ children }) {
             })))
         })
     }, [])
+
+    console.log(`isLoggedIn: ${isLoggedIn}`)
 
     //we are receiving the todo.id from Todolist.js
 
@@ -52,7 +55,7 @@ function ContextProvider({ children }) {
     })
 
     return (
-        <AppContext.Provider value={{ todolist, handleAddTodo, removeTodo, updateTodo }}>
+        <AppContext.Provider value={{ isLoggedIn, todolist, handleAddTodo, removeTodo, updateTodo }}>
             {children}
         </AppContext.Provider>
     )

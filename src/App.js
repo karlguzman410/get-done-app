@@ -1,17 +1,16 @@
-import { Toolbar } from '@material-ui/core'
-import React from 'react'
-import { Form, Navbar, Todolist } from './components'
+import React, { useContext, useState } from 'react'
+import Home from './pages/Home'
+import { AppContext } from './AppContext'
+import Login from './pages/Login'
 
 
 const App = () => {
+    const { isLoggedIn } = useContext(AppContext)
+    // const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     return (
         <div>
-            <Navbar />
-            <Toolbar />
-            <Form />
-            <br />
-            <Todolist />
+            {isLoggedIn ? <Home /> : <Login />}
         </div>
     )
 }
