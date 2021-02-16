@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
-import Todolist from '../List/Todolist'
+import React, { useContext } from 'react'
+import { AppContext } from '../../AppContext'
 import { Modal, Grid, Typography, Button, Input } from '@material-ui/core'
 import useStyles from "./styles";
 
 
-const Editmodal = ({ updateTodo, editId, modal, setModal, edit, setEdit }) => {
+const Editmodal = ({ editId, modal, setModal, edit, setEdit }) => {
+    const { updateTodo } = useContext(AppContext)
     const classes = useStyles();
     const handleEdit = (event, edit, editId) => {
         event.preventDefault();

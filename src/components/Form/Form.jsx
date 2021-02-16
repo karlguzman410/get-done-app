@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   InputLabel,
   Input,
@@ -10,9 +10,11 @@ import {
   Paper,
   FormControl,
 } from "@material-ui/core";
+import { AppContext } from "../../AppContext";
 import useStyles from "./styles";
 
-const Form = ({ handleAddTodo }) => {
+const Form = () => {
+  const { handleAddTodo } = useContext(AppContext);
   const classes = useStyles();
   const [todo, setTodo] = useState("");
 

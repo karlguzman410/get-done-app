@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Box, Typography, Grid, Button, Checkbox } from "@material-ui/core";
+import { AppContext } from "../../AppContext";
 import EditIcon from "@material-ui/icons/Edit";
 import Editmodal from "../Editmodal/Editmodal";
 
-const Todolist = ({ todolist, removeTodo, updateTodo }) => {
+const Todolist = () => {
+  const { todolist, removeTodo } = useContext(AppContext);
   const [modal, setModal] = useState(false);
   const [editId, setEditId] = useState("");
   const [edit, setEdit] = useState("");
@@ -49,7 +51,6 @@ const Todolist = ({ todolist, removeTodo, updateTodo }) => {
               </Grid>
             ))}
             <Editmodal
-              updateTodo={updateTodo}
               modal={modal}
               edit={edit}
               setEdit={setEdit}
