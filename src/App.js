@@ -28,8 +28,6 @@ const App = () => {
 
 
     const handleAddTodo = ((todo) => {
-        console.log('handleAddTodo in App.js')
-        console.log(`${todo} received from Form.js`)
         //add this object to the database collection
         //in this case, the object has key 'todo'
         database.collection('todos').add({
@@ -47,6 +45,12 @@ const App = () => {
         database.collection('todos').doc(todo).delete()
     })
 
+    const updateTodo = ((edit, editId) => {
+        console.log('updateTodo in App.js')
+        console.log(`${editId} Received from Todolist.js `)
+        database.collection('todos').doc(editId).update({ todo: edit })
+    })
+
     return (
         <div>
             <Navbar />
@@ -56,7 +60,7 @@ const App = () => {
             {/* {Object.keys(todolist).map(todo => (
                 <p key={todolist[todo].id}>{todolist[todo].todo}</p>
             ))} */}
-            <Todolist todolist={todolist} removeTodo={removeTodo} />
+            <Todolist todolist={todolist} removeTodo={removeTodo} updateTodo={updateTodo} />
         </div>
     )
 }
