@@ -1,3 +1,3 @@
 //ReadMe init
 
-.env file included
+.env file ignored
