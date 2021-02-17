@@ -1,10 +1,10 @@
 import React from 'react'
+import { Grid, Box } from '@material-ui/core'
+import Signup from '../components/Signup/Signup'
 
 const Login = () => {
     return (
-        <div>
-            <h1>Login Page</h1>
-        </div>
+        <Signup />
     )
 }
 
