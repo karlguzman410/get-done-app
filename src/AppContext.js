@@ -6,7 +6,7 @@ const AppContext = React.createContext()
 
 function ContextProvider({ children }) {
     const [todolist, setTodolist] = useState([])
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [isLoggedIn, setIsLoggedIn] = useState(true)
 
     //fetch todos from firebase upon mounting
     useEffect(() => {
