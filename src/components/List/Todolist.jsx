@@ -1,14 +1,33 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Box, Typography, Grid, Button, Checkbox } from "@material-ui/core";
 import { AppContext } from "../../AppContext";
+import database from "../../firebase";
 import EditIcon from "@material-ui/icons/Edit";
 import Editmodal from "../Editmodal/Editmodal";
 
 const Todolist = () => {
-  const { todolist, removeTodo } = useContext(AppContext);
+  const { currentUser, todolist, removeTodo, setTodolist } = useContext(
+    AppContext
+  );
   const [modal, setModal] = useState(false);
   const [editId, setEditId] = useState("");
   const [edit, setEdit] = useState("");
+
+  //fetch todos from firebase upon mounting
+  useEffect(() => {
+    //sort by timestamp, descending -> when the object or 'todo' created in the firebase
+    database
+      .collection(`${currentUser.displayName}'s todos`)
+      .orderBy("timestamp", "desc")
+      .onSnapshot((snapshot) => {
+        setTodolist(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            todo: doc.data().todo,
+          }))
+        );
+      });
+  }, []);
 
   const handleModal = (event, todo) => {
     event.preventDefault();
@@ -16,6 +35,8 @@ const Todolist = () => {
     setEditId(todo.id);
     setModal(true);
   };
+
+  console.log(currentUser);
 
   const handleChange = (event, todo) => {
     event.preventDefault();

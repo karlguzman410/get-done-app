@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { AppContext } from '../../AppContext'
 import useStyles from './styles'
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
-import { Avatar, Button, Paper, Grid, Typography, Container, TextField, InputAdornment, IconButton } from '@material-ui/core'
+import { Button, Paper, Grid, Typography, Container, TextField, InputAdornment, IconButton } from '@material-ui/core'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
@@ -14,6 +14,9 @@ const initialState = {
 }
 
 const Signup = () => {
+
+    const { handleSignUp, handleSignIn } = useContext(AppContext)
+
     const classes = useStyles()
 
     const [isSignUp, setIsSignUp] = useState(true)
@@ -26,11 +29,22 @@ const Signup = () => {
         setFormData({ ...formData, [event.target.name]: event.target.value })
     }
 
+    const handleSubmit = (event, formData) => {
+        event.preventDefault()
+        console.log('handleSubmit()')
+        console.log(formData)
+        if (isSignUp) {
+            handleSignUp(formData)
+        } else {
+            handleSignIn(formData)
+        }
+    }
+
+    console.log(isSignUp)
+
     const handleShowPassword = () => setshowPassword((prevshowPassword) => !prevshowPassword)
 
     const switchMode = () => setIsSignUp((previsSignUp) => !previsSignUp)
-
-    console.log(formData)
 
     const ifSignUp = (
         <>
@@ -51,7 +65,7 @@ const Signup = () => {
                 <Typography variant="h5" gutterBottom>
                     {isSignUp ? 'Sign Up' : 'Sign in'}
                 </Typography>
-                <form className={classes.form}>
+                <form className={classes.form} onSubmit={(event) => handleSubmit(event, formData)}>
                     <Grid container spacing={2}>
                         {isSignUp ? ifSignUp : null}
                         <Grid item xs={12}>
@@ -71,7 +85,7 @@ const Signup = () => {
                         {isSignUp ? (
                             <>
                                 <Grid item xs={12}>
-                                    <TextField name="confirmPassword" label="Confirm Password" type={!showPassword ? "password" : "text"} variant="outlined" required fullWidth onChange={handleChange} onChange={handleChange} InputProps={{
+                                    <TextField name="confirmPassword" label="Confirm Password" type={!showPassword ? "password" : "text"} variant="outlined" required fullWidth onChange={handleChange} InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
                                                 <IconButton onClick={handleShowPassword}>
