@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { database } from './firebase'
 import firebase from 'firebase'
 import { auth } from './firebase'
@@ -8,11 +8,8 @@ const AppContext = React.createContext()
 function ContextProvider({ children }) {
     const [currentUser, setCurrentUser] = useState();
     const [todolist, setTodolist] = useState([])
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [isLoggedIn, setIsLoggedIn] = useState(null)
 
-
-
-    console.log(currentUser)
 
     const handleSignUp = (formData) => {
         console.log('handleSignUp()')
@@ -22,33 +19,22 @@ function ContextProvider({ children }) {
 
     const handleSignIn = (formData) => {
         console.log('handleSignIn()')
-        console.log(formData)
         signin(formData)
     }
 
     const handleLogout = (event) => {
         event.preventDefault()
-        console.log('handleLogout() called')
-        console.log(`Logout user: ${currentUser.displayName}`)
         auth.signOut()
-            .then(() => {
-                console.log('Logout successful')
-                setIsLoggedIn(false)
-            })
-            .catch((error) => {
-                console.log(error.code)
-                console.log(error.message)
-            })
     }
 
     const signin = (formData) => {
         auth.signInWithEmailAndPassword(formData.email, formData.password)
             .then((userCredential) => {
-                let user = userCredential.user
-                console.log(`Sign in user: ${user.displayName}`)
-                setCurrentUser(user)
-                console.log('Sign in successful')
-                setIsLoggedIn(true)
+                console.log(userCredential)
+            })
+            .catch((error) => {
+                console.log((error.code))
+                console.log((error.message))
             })
     }
 
@@ -63,7 +49,6 @@ function ContextProvider({ children }) {
                 }).then(() => {
                     setCurrentUser(user)
                     console.log('Sign up successful')
-                    setIsLoggedIn(true)
                 }).catch((error) => {
                     console.log(error.code)
                     console.log(error.message)
@@ -77,11 +62,18 @@ function ContextProvider({ children }) {
     }
 
 
-
-    console.log(`isLoggedIn: ${isLoggedIn}`)
+    // auth status changes
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            setCurrentUser(user)
+            setIsLoggedIn(true)
+        } else {
+            console.log('User logged out')
+            setIsLoggedIn(false)
+        }
+    })
 
     //we are receiving the todo.id from Todolist.js
-
     const handleAddTodo = ((todo) => {
         //add this object to the database collection
         //in this case, the object has key 'todo'
@@ -106,7 +98,7 @@ function ContextProvider({ children }) {
     })
 
     return (
-        <AppContext.Provider value={{ currentUser, handleSignUp, handleSignIn, isLoggedIn, todolist, handleAddTodo, removeTodo, updateTodo, setTodolist, handleLogout }}>
+        <AppContext.Provider value={{ currentUser, handleSignUp, handleSignIn, todolist, handleAddTodo, removeTodo, updateTodo, setTodolist, handleLogout, isLoggedIn }}>
             {children}
         </AppContext.Provider>
     )

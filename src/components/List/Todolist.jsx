@@ -16,20 +16,24 @@ const Todolist = () => {
   //fetch todos from firebase upon mounting
   useEffect(() => {
     //sort by timestamp, descending -> when the object or 'todo' created in the firebase
-    database
-      .collection(`${currentUser.displayName}'s todos`)
-      .orderBy("timestamp", "desc")
-      .onSnapshot((snapshot) => {
-        setTodolist(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            todo: doc.data().todo,
-          }))
-        );
-      });
-  }, []);
+    const user = currentUser?.displayName;
 
-  console.log(`Todolist.jsx todo list : ${todolist}`);
+    if (user) {
+      database
+        .collection(`${currentUser.displayName}'s todos`)
+        .orderBy("timestamp", "desc")
+        .onSnapshot((snapshot) => {
+          setTodolist(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              todo: doc.data().todo,
+            }))
+          );
+        });
+    } else {
+      console.log("fetching user");
+    }
+  }, []);
 
   const handleModal = (event, todo) => {
     event.preventDefault();
@@ -37,8 +41,6 @@ const Todolist = () => {
     setEditId(todo.id);
     setModal(true);
   };
-
-  console.log(currentUser);
 
   const handleChange = (event, todo) => {
     event.preventDefault();

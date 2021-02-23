@@ -40,7 +40,6 @@ const Signup = () => {
         }
     }
 
-    console.log(isSignUp)
 
     const handleShowPassword = () => setshowPassword((prevshowPassword) => !prevshowPassword)
 
