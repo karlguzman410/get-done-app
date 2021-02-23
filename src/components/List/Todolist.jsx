@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Box, Typography, Grid, Button, Checkbox } from "@material-ui/core";
 import { AppContext } from "../../AppContext";
-import database from "../../firebase";
+import { database } from "../../firebase";
 import EditIcon from "@material-ui/icons/Edit";
 import Editmodal from "../Editmodal/Editmodal";
 
@@ -28,6 +28,8 @@ const Todolist = () => {
         );
       });
   }, []);
+
+  console.log(`Todolist.jsx todo list : ${todolist}`);
 
   const handleModal = (event, todo) => {
     event.preventDefault();

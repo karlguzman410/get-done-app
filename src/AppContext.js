@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import database from './firebase'
+import { database } from './firebase'
 import firebase from 'firebase'
 import { auth } from './firebase'
 
@@ -26,10 +26,26 @@ function ContextProvider({ children }) {
         signin(formData)
     }
 
+    const handleLogout = (event) => {
+        event.preventDefault()
+        console.log('handleLogout() called')
+        console.log(`Logout user: ${currentUser.displayName}`)
+        auth.signOut()
+            .then(() => {
+                console.log('Logout successful')
+                setIsLoggedIn(false)
+            })
+            .catch((error) => {
+                console.log(error.code)
+                console.log(error.message)
+            })
+    }
+
     const signin = (formData) => {
         auth.signInWithEmailAndPassword(formData.email, formData.password)
             .then((userCredential) => {
-                var user = userCredential.user
+                let user = userCredential.user
+                console.log(`Sign in user: ${user.displayName}`)
                 setCurrentUser(user)
                 console.log('Sign in successful')
                 setIsLoggedIn(true)
@@ -48,7 +64,6 @@ function ContextProvider({ children }) {
                     setCurrentUser(user)
                     console.log('Sign up successful')
                     setIsLoggedIn(true)
-
                 }).catch((error) => {
                     console.log(error.code)
                     console.log(error.message)
@@ -91,7 +106,7 @@ function ContextProvider({ children }) {
     })
 
     return (
-        <AppContext.Provider value={{ currentUser, handleSignUp, handleSignIn, isLoggedIn, todolist, handleAddTodo, removeTodo, updateTodo, setTodolist }}>
+        <AppContext.Provider value={{ currentUser, handleSignUp, handleSignIn, isLoggedIn, todolist, handleAddTodo, removeTodo, updateTodo, setTodolist, handleLogout }}>
             {children}
         </AppContext.Provider>
     )

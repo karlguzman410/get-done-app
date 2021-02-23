@@ -19,7 +19,7 @@ const Signup = () => {
 
     const classes = useStyles()
 
-    const [isSignUp, setIsSignUp] = useState(true)
+    const [isSignUp, setIsSignUp] = useState(false)
 
     const [formData, setFormData] = useState(initialState)
 
@@ -63,7 +63,7 @@ const Signup = () => {
         <Container component="main" maxWidth="md">
             <Paper elevation={3} className={classes.paper}>
                 <Typography variant="h5" gutterBottom>
-                    {isSignUp ? 'Sign Up' : 'Sign in'}
+                    {isSignUp ? 'Sign Up' : 'Log in'}
                 </Typography>
                 <form className={classes.form} onSubmit={(event) => handleSubmit(event, formData)}>
                     <Grid container spacing={2}>
